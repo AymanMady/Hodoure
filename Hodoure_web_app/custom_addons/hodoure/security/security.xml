@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <record id="module_category_school" model="ir.module.category">
+        <field name="name">School</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="group_admin_user" model="res.groups" >
+        <field name="name">Director (School)</field>
+        <field name="category_id" ref="module_category_school"/>
+    </record>
+
+    <!-- Définition du groupe teachers qui hérite de base.group_user -->
+    <record id="teachers_group" model="res.groups">
+        <field name="name">Teachers</field>
+        <field name="category_id" ref="base.module_category_hodoure"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <!-- Catégorie pour votre module -->
+    <record id="module_category_hodoure" model="ir.module.category">
+        <field name="name">hodoure</field>
+        <field name="description">hodoure Application</field>
+        <field name="sequence">10</field>
+    </record>
+</odoo>

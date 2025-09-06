@@ -1,0 +1,44 @@
+<odoo>
+    <data>
+    <record id="hodoure_parent_tree" model="ir.ui.view">
+        <field name="name">parent.tree</field>
+        <field name="model">hodoure.parent</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="phone"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hodoure_parent_form" model="ir.ui.view">
+        <field name="name">parent.form</field>
+        <field name="model">hodoure.parent</field>
+        <field name="arch" type="xml">
+            <form string="Student" >
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="phone"/>
+                    </group>
+                    <button name="action_save_parent"
+                            string="Save"
+                            type="object"
+                            class="btn btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn btn-secondary"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="hodoure_parent_action" model="ir.actions.act_window">
+        <field name="name">Parents</field>
+        <field name="res_model">hodoure.parent</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="parent_menu_root" web_icon="hodoure,static/src/img/icons/parents.png" name="Parents"/>
+    <menuitem id="hodoure_parent_menu" name="Parents" parent="parent_menu_root" action="hodoure_parent_action"/>
+
+    </data>
+</odoo>

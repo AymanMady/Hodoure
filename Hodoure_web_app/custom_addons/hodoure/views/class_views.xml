@@ -1,0 +1,182 @@
+<odoo>
+    <data>
+        <!-- Search view for filtering -->
+        <record id="hodoure_class_search" model="ir.ui.view">
+            <field name="name">class.search</field>
+            <field name="model">hodoure.class</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="niveau"/>
+                    
+                    <group expand="0" string="Group By">
+                        <filter name="group_by_niveau" string="Level" context="{'group_by': 'niveau'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Enhanced Kanban View with Modern Card Design -->
+        <record id="hodoure_class_kanban" model="ir.ui.view">
+            <field name="name">class.kanban</field>
+            <field name="model">hodoure.class</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_dashboard">
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="niveau"/>
+                    
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_card oe_kanban_global_click" style="margin: 8px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: all 0.3s ease; overflow: hidden; background: white; border: none;">
+                                <div class="oe_kanban_content" style="padding: 0;">
+                                    
+                                    <!-- Card Header avec Image Générée -->
+                                    <div class="card-header" style="
+                                        height: 140px; 
+                                        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%); 
+                                        position: relative; 
+                                        display: flex; 
+                                        align-items: center; 
+                                        justify-content: center; 
+                                        color: white;
+                                        overflow: hidden;
+                                    ">
+                                        <!-- Motif de fond décoratif -->
+                                        <div style="
+                                            position: absolute; 
+                                            top: 0; 
+                                            left: 0; 
+                                            right: 0; 
+                                            bottom: 0; 
+                                            background-image: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%), 
+                                                            radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 50%);
+                                        "></div>
+                                        
+                                        <!-- Contenu principal du header -->
+                                        <div style="text-align: center; z-index: 2; position: relative;">
+                                            <div style="font-size: 28px; font-weight: 700; margin-bottom: 8px; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+                                                <t t-esc="record.name.value"/>
+                                            </div>
+                                            <div style="font-size: 16px; opacity: 0.9; display: flex; align-items: center; justify-content: center;">
+                                                <i class="fa fa-graduation-cap" style="margin-right: 8px; font-size: 18px;"/>
+                                                Niveau <t t-esc="record.niveau.value"/>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Icônes décoratives -->
+                                        <div style="position: absolute; top: 15px; right: 20px; opacity: 0.25;">
+                                            <i class="fa fa-book" style="font-size: 24px;"/>
+                                        </div>
+                                        <div style="position: absolute; bottom: 15px; left: 20px; opacity: 0.25;">
+                                            <i class="fa fa-users" style="font-size: 20px;"/>
+                                        </div>
+                                        <div style="position: absolute; top: 50%; right: -10px; opacity: 0.15; transform: translateY(-50%);">
+                                            <i class="fa fa-graduation-cap" style="font-size: 80px;"/>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Card Body -->
+                                    <div class="card-body" style="padding: 20px;">
+                                    </div>
+                                    
+                                    <!-- Card Footer -->
+                                    <div class="card-footer" style="
+                                        padding: 16px 20px; 
+                                        background: #fafafa; 
+                                        border-top: 1px solid #eee; 
+                                        display: flex; 
+                                        justify-content: space-between; 
+                                        align-items: center;
+                                    ">
+                                        <div>
+                                            <span class="badge" style="
+                                                background: linear-gradient(135deg, #667eea, #764ba2); 
+                                                color: white; 
+                                                padding: 6px 12px; 
+                                                border-radius: 20px; 
+                                                font-size: 12px; 
+                                                font-weight: 500;
+                                                box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
+                                            ">
+                                                <i class="fa fa-graduation-cap" style="margin-right: 4px;"/>
+                                                Niveau <t t-esc="record.niveau.value"/>
+                                            </span>
+                                        </div>
+                                        <div style="display: flex; align-items: center; color: #666;">
+                                            <i class="fa fa-eye" style="margin-right: 4px; font-size: 14px;"/>
+                                            <span style="font-size: 12px;">Voir détails</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Effet hover -->
+                                <style>
+                                    .oe_kanban_card:hover {
+                                        transform: translateY(-4px) !important;
+                                        box-shadow: 0 8px 25px rgba(0,0,0,0.2) !important;
+                                    }
+                                </style>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- Enhanced Form View with Class Image -->
+        <record id="hodoure_class_form" model="ir.ui.view">
+            <field name="name">class.form</field>
+            <field name="model">hodoure.class</field>
+            <field name="arch" type="xml">
+                <form string="Class">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Class Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="Class Information">
+                                <field name="niveau"/>
+                            </group>
+                        </group>
+                        <div class="oe_button_box">
+                            <button name="action_save_class"
+                                    string="Save"
+                                    type="object"
+                                    class="btn btn-primary"
+                                    />
+                            <button string="Cancel" special="cancel" class="btn btn-secondary"/>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action with kanban and form views only -->
+        <record id="hodoure_class_action" model="ir.actions.act_window">
+            <field name="name">Classes</field>
+            <field name="res_model">hodoure.class</field>
+            <field name="view_mode">kanban,form</field>
+            <field name="search_view_id" ref="hodoure_class_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first class!
+                </p>
+                <p>
+                    Manage all your classes from this organized view.
+                    Classes are automatically grouped by level for easy navigation.
+                </p>
+            </field>
+        </record>
+
+        <!-- Menu structure -->
+        <menuitem id="class_menu_root" web_icon="hodoure,static/src/img/icons/classes.png" name="Classes"/>
+        <menuitem id="hodoure_class_menu" 
+                  name="Classes" 
+                  parent="class_menu_root" 
+                  action="hodoure_class_action"/>
+
+    </data>
+</odoo>

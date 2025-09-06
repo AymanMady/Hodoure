@@ -1,0 +1,149 @@
+<odoo>
+    <data>
+
+        <!-- Kanban View (Cards) - Design Simple et Joli -->
+        <record id="hodoure_student_kanban_view" model="ir.ui.view">
+            <field name="name">student.kanban.view</field>
+            <field name="model">hodoure.student</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile" >
+                    <field name="student_number"/>
+                    <field name="name"/>
+                    <field name="image"/>
+                    <field name="class_id"/>
+                    <field name="parent_id"/>
+                    <templates>
+                        <t t-name="kanban-box" >
+                                <!-- Card Content -->
+                                <div class="oe_kanban_card oe_kanban_global_click p-4 mb-3" style="background: white; border-radius: 15px; margin: 3px; height: calc(100% - 6px);">
+                                    
+                                    <!-- Avatar et Nom -->
+                                    <div class="text-center mb-1">
+                                        <div style="position: relative; display: inline-block;">
+                                            <img t-att-src="kanban_image('hodoure.student', 'image')" 
+                                                class="rounded-circle" 
+                                                alt="Avatar"
+                                                style="width: 80px; height: 80px; object-fit: cover; border: 4px solid white; box-shadow: 0 4px 15px rgba(0,0,0,0.1);"/>
+                                        </div>
+                                        <h5 class="mt-3 mb-1" style="color: #2d3748; font-weight: 600;">
+                                            <field name="name"/>
+                                        </h5>
+                                        <p class="text-muted small mb-0" style="font-size: 13px;">
+                                            #<field name="student_number"/>
+                                        </p>
+                                    </div>
+
+                                    <!-- Informations -->
+                                    <div class="mb-1">
+                                        <div class="d-flex align-items-center mb-2" style="padding: 8px 12px; background-color: #f7fafc; border-radius: 8px;">
+                                            <div style="width: 8px; height: 8px; background-color: #48bb78; border-radius: 50%; margin-right: 10px;"></div>
+                                            <div>
+                                                <small style="color: #718096; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Classe</small>
+                                                <div style="color: #2d3748; font-weight: 500; font-size: 14px;">
+                                                    <field name="class_id"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="d-flex align-items-center" style="padding: 8px 12px; background-color: #f7fafc; border-radius: 8px;">
+                                            <div style="width: 8px; height: 8px; background-color: #ed8936; border-radius: 50%; margin-right: 10px;"></div>
+                                            <div>
+                                                <small style="color: #718096; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Parent</small>
+                                                <div style="color: #2d3748; font-weight: 500; font-size: 14px;">
+                                                    <field name="parent_id"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <!-- Form View -->
+        <record id="hodoure_student_form_view" model="ir.ui.view">
+            <field name="name">student.form.view</field>
+            <field name="model">hodoure.student</field>
+            <field name="arch" type="xml">
+                <form string="Student" create="false" >
+                    <sheet>
+                        <div class="oe_title">
+                            <div class="o_row">
+                                <field name="image" widget="image" class="oe_avatar" 
+                                       options="{'preview_image': 'image', 'size': [90, 90]}"/>
+                                <div class="oe_title_area">
+                                    <h1>
+                                        <field name="name" placeholder="Student Name" required="1"/>
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+
+                        <group>
+                            <group string="Information">
+                                <field name="name_fr" string="French Name" required="1"/>
+                                <field name="student_number" string="Student Number" required="1"/>
+                                <field name="class_id" string="Class" required="1"/>
+                                <field name="parent_id" string="Parent" required="1"/>
+                            </group>
+                        </group>
+
+                        <div class="oe_button_box">
+                            <button name="action_save_student"
+                                    string="Save"
+                                    type="object"
+                                    class="btn btn-primary"
+                                    />
+                            <button string="Cancel" special="cancel" class="btn btn-secondary"/>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record id="hodoure_student_search_view" model="ir.ui.view">
+            <field name="name">student.search.view</field>
+            <field name="model">hodoure.student</field>
+            <field name="arch" type="xml">
+                <search string="Search Students">
+                    <field name="student_number" string="Student Number"/>
+                    <field name="name" string="Name"/>
+                    <field name="class_id" string="Class"/>
+                    <field name="parent_id" string="Parent"/>
+                    
+                    <group expand="0" string="Group By">
+                        <filter string="Class" name="group_by_class" context="{'group_by': 'class_id'}"/>
+                        <filter string="Parent" name="group_by_parent" context="{'group_by': 'parent_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action - Default view set to kanban -->
+        <record id="hodoure_student_action" model="ir.actions.act_window">
+            <field name="name">Students</field>
+            <field name="res_model">hodoure.student</field>
+            <field name="view_mode">kanban,form</field>
+            <field name="view_id" ref="hodoure_student_kanban_view"/>
+            <field name="search_view_id" ref="hodoure_student_search_view"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first student
+                </p>
+                <p>
+                    Click the "New" button to add a new student to the system.
+                </p>
+            </field>
+        </record>
+
+        <!-- Menus -->
+        <menuitem id="student_menu_root" web_icon="hodoure,static/src/img/icons/students.png" name="Students" sequence="10"/>
+        <menuitem id="hodoure_student_menu" 
+                  name="All Students" 
+                  parent="student_menu_root" 
+                  action="hodoure_student_action" 
+                  sequence="10"/>
+    </data>
+</odoo>

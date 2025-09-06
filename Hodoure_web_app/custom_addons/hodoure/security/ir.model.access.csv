@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hodoure_student,access__hodoure_student,model_hodoure_student,,1,1,1,1
+access_hodoure_school,access__hodoure_school,model_hodoure_school,,1,1,1,1
+access_hodoure_class,access__hodoure_class,model_hodoure_class,,1,1,1,1
+access_hodoure_parent,access__hodoure_parent,model_hodoure_parent,,1,1,1,1
+access_hodoure_teacher,access__hodoure_teacher,model_hodoure_teacher,,1,1,1,1
+access_hodoure_absence,access__hodoure_absence,model_hodoure_absence,,1,1,1,1
+access_hodoure_notification,access__hodoure_notification,model_hodoure_notification,,1,1,1,1
+access_hodoure_period,access__hodoure_period,model_hodoure_period,,1,1,1,1
+access_hodoure_subject,access__hodoure_subject,model_hodoure_subject,,1,1,1,1
+access_res_users,access__res_users,model_res_users,,1,1,1,1

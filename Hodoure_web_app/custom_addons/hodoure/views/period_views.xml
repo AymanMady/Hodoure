@@ -1,0 +1,42 @@
+<odoo>
+    <data>
+    <record id="hodoure_period_tree" model="ir.ui.view">
+        <field name="name">period.tree</field>
+        <field name="model">hodoure.period</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hodoure_period_form" model="ir.ui.view">
+        <field name="name">period.form</field>
+        <field name="model">hodoure.period</field>
+        <field name="arch" type="xml">
+            <form string="Period" >
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <button name="action_save_period"
+                            string="Save"
+                            type="object"
+                            class="btn btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn btn-secondary"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="hodoure_period_action" model="ir.actions.act_window">
+        <field name="name">Periods</field>
+        <field name="res_model">hodoure.period</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="period_menu_root"  name="Periods"/>
+    <menuitem id="hodoure_period_menu" name="Periods" parent="period_menu_root" action="hodoure_period_action"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,42 @@
+services:
+  hodoure-odoo:
+    build: .
+    container_name: hodoure_odoo
+    command: /usr/bin/odoo -p 8069 --db_host=postgres --db_user=${DB_USER} --db_password=${DB_PASSWORD} -u hodoure,code_backend_theme
+    ports:
+      - "8069:8069"
+    volumes:
+      - web-data:/var/lib/odoo
+      - ./config:/etc/odoo
+      - ./custom_addons:/mnt/extra-addons
+    depends_on:
+      - postgres
+      - pgadmin
+
+  postgres:
+    image: postgres
+    container_name: hodoure_postgres
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: hodoure_pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
+volumes:
+  web-data:
+  db-data:
+  pgadmin-data:

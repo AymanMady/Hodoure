@@ -1,0 +1,145 @@
+<odoo>
+    <data>
+        <!-- Kanban View for Absences -->
+        <record id="hodoure_absence_kanban" model="ir.ui.view">
+            <field name="name">absence.kanban</field>
+            <field name="model">hodoure.absence</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile" create="false">
+                    <field name="teacher_id"/>
+                    <field name="absent_student_ids"/>
+                    <field name="date"/>
+                    <field name="period_id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_card oe_kanban_global_click" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin: 8px; transition: transform 0.2s ease, box-shadow 0.2s ease;">
+                                <div class="o_kanban_card_header" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 16px; border-radius: 12px 12px 0 0;">
+                                    <div class="o_kanban_card_header_title">
+                                        <div class="o_field_char o_text_overflow" style="font-weight: 600; font-size: 16px;">
+                                            <i class="fa fa-user-tie" style="margin-right: 8px;"/>
+                                            <field name="teacher_id"/>
+                                        </div>
+                                    </div>
+                                    <div class="o_kanban_card_manage_pane dropdown-menu" role="menu">
+                                        <a role="menuitem" type="edit" class="dropdown-item">Edit</a>
+                                        <a role="menuitem" type="delete" class="dropdown-item">Delete</a>
+                                    </div>
+                                </div>
+                                
+                                <div class="container o_kanban_card_content" style="padding: 20px;">
+                                    <div class="row mb-3">
+                                        <div class="col-12">
+                                            <div style="background: #f8f9ff; padding: 12px; border-radius: 8px; border-left: 4px solid #667eea;">
+                                                <strong style="color: #667eea; font-size: 14px;">
+                                                    <i class="fa fa-users" style="margin-right: 6px;"/>
+                                                    Absent Students
+                                                </strong>
+                                                <div style="margin-top: 8px; color: #2c3e50;">
+                                                    <field name="absent_student_ids" widget="many2many_tags" 
+                                                           options="{ 'no_create_edit': True}"
+                                                           style="margin-top: 4px;"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div style="text-align: center; padding: 12px; background: #fff5f5; border-radius: 8px; border: 1px solid #fed7d7;">
+                                                <i class="fa fa-calendar" style="color: #e53e3e; font-size: 20px; margin-bottom: 8px;"/>
+                                                <div style="font-size: 12px; color: #718096; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;">Date</div>
+                                                <div style="font-weight: 600; color: #2d3748; margin-top: 4px;">
+                                                    <field name="date" widget="date"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div style="text-align: center; padding: 12px; background: #f0fff4; border-radius: 8px; border: 1px solid #c6f6d5;">
+                                                <i class="fa fa-clock-o" style="color: #38a169; font-size: 20px; margin-bottom: 8px;"/>
+                                                <div style="font-size: 12px; color: #718096; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;">Period_id</div>
+                                                <div style="font-weight: 600; color: #2d3748; margin-top: 4px;">
+                                                    <field name="period_id"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row mt-3">
+                                        <div class="col-12">
+                                            <div class="btn-group w-100" role="group">
+                                                <button name="notify_absence" type="object" 
+                                                        class="btn btn-success btn-sm" 
+                                                        style="border-radius: 0 6px 6px 0; font-weight: 500;">
+                                                    <i class="fa fa-bell" style="margin-right: 4px;"/>
+                                                    Notify
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+
+        <!-- Form View for Absences -->
+        <record id="hodoure_absence_form" model="ir.ui.view">
+            <field name="name">absence.form</field>
+            <field name="model">hodoure.absence</field>
+            <field name="arch" type="xml">
+                <form string="Student Absences" create="false" edit="false">
+                    <header>
+                        <button name="notify_absence" string="Send Notification" type="object" 
+                                class="btn-success" icon="fa-bell"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="date" widget="date" readonly="1"/>
+                                - <field name="period_id" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="Absence Information" class="o_group_col_6">
+                                <field name="teacher_id" widget="many2one_avatar_user" 
+                                       options="{'no_create': True, 'no_open': True}"/>
+                                <field name="date" widget="date"/>
+                                <field name="period_id" widget="radio" options="{'horizontal': true}"/>
+                            </group>
+                            <group string="Affected Students" class="o_group_col_6">
+                                <field name="absent_student_ids" widget="many2many_tags" 
+                                       options="{'no_create_edit': True}"
+                                       placeholder="Select absent students..."/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action to display the Kanban view -->
+        <record id="hodoure_absence_action" model="ir.actions.act_window">
+            <field name="name">Student Absences</field>
+            <field name="res_model">hodoure.absence</field>
+            <field name="view_mode">kanban,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No absence registered
+                </p>
+                <p>
+                    Start by registering the absences of the students.
+                    The notifications will be sent automatically to the parents.
+                </p>
+            </field>
+        </record>
+
+        <!-- Menu item -->
+        <menuitem id="absence_menu_root" name="Absences" web_icon="hodoure,static/src/img/icons/absence.png" sequence="10"/>
+        <menuitem id="hodoure_absence_menu" name="Student Absences" 
+                  parent="absence_menu_root" action="hodoure_absence_action" sequence="10"/>
+
+    </data>
+</odoo>

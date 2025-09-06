@@ -1,0 +1,11 @@
+change the name from edunotify to hodoure  /done
+fix the translation or use arabic for all the translation
+make seeders for the permissions
+complete the comfiguration of the whatsapp notification
+create excel files example for the import 
+
+design :
+
+corrige the disign of side bar add the icons and make big the title
+add a default image for the student
+modifier le login pour qu'il soit phone instaead of email
